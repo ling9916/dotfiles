@@ -1,0 +1,12 @@
+{
+  "main() template": {
+    "prefix": "main",
+    "body": [
+      "int main(int argc, char *argv[]) {",
+      "\t${0:/* code */}",
+      "\treturn 0;",
+      "}"
+    ],
+    "description": "Standard main() snippet"
+  }
+}
