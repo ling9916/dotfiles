@@ -25,3 +25,16 @@ for name in `ls ${SCRIPT_DIR}`; do
 
   ln -sf ${SCRIPT_DIR}/${name} $DEST_DIR
 done
+
+cat > /usr/local/bin/vim <<EOF
+#!/bin/sh
+main() {
+  if which nvim >/dev/null; then
+    command nvim "/$@"
+  else
+    command /usr/bin/vim "/$@"
+  fi
+}
+main "/$@"
+EOF
+
