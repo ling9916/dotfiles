@@ -1,5 +1,5 @@
 [includeIf "gitdir/i:/**"]
-  path = ~/.config/git/person_git.cfg
+  path = ~/.config/git/person.cfg
 
 [includeIf "gitdir/i:**/workdir/**"]
   path = ~/.config/work_git.cfg
@@ -20,4 +20,4 @@
 	diffFilter = delta --color-only
 [delta]
 	line-numbers = true
-	side-by-side = true
+	# side-by-side = true
