@@ -1,0 +1,23 @@
+[includeIf "gitdir/i:/**"]
+  path = ~/.config/git/person.cfg
+
+[includeIf "gitdir/i:**/workdir/**"]
+  path = ~/.config/work_git.cfg
+
+[init]
+	defaultBranch = main
+[core]
+	quotepath = false
+	pager = delta
+[alias]
+	ad = add
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	unstage = reset HEAD --
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	line-numbers = true
+	# side-by-side = true
