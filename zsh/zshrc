@@ -1,0 +1,60 @@
+# 加载环境配置
+if [[ "$(uname)" == "Linux" ]]; then
+  [[ -f $HOME/.config/zsh/linux.cfg ]] && source $HOME/.config/zsh/linux.cfg
+elif [[ "$(uname)" == "Darwin" ]]; then
+  [[ -f $HOME/.config/zsh/macOS.cfg ]] && source $HOME/.config/zsh/macOS.cfg
+fi
+
+# 加载代理配置
+ [[ -f $HOME/.config/zsh/proxy.cfg ]] && source $HOME/.config/zsh/proxy.cfg
+
+#
+alias sudo="sudo -E"
+alias cl="clear"
+if command lsd -V &> /dev/null ;then
+  alias ls="lsd";  alias ll="lsd -l";  alias la="lsd -al"
+fi
+
+if command delta -V &> /dev/null ;then
+  alias diff="delta"
+fi
+
+
+alias nv="nvim"
+alias lg="lazygit"
+alias js="joshuto"
+alias tns="tmux new-session -s"
+
+export ZPLUG_HOME=${ZSH}/custom/zplug
+# Check if zplug is installed
+if [[ ! -d "${ZPLUG_HOME}" ]]; then
+  git clone https://github.com/zplug/zplug $ZPLUG_HOME
+  # If we can't get zplug, it'll be a very sobering shell experience. To at
+  # least complete the sourcing of this file, we'll define an always-false
+  # returning zplug function.
+  if [[ $? != 0 ]]; then
+    function zplug() { return 1 }
+  fi
+fi
+
+# Essential
+source ${ZPLUG_HOME}/init.zsh
+
+# List of plugin packages that need to be installed
+zplug 'plugins/git', from:oh-my-zsh, if:'which git'
+zplug 'plugins/vi-mode', from:oh-my-zsh
+zplug 'romkatv/powerlevel10k', as:theme, depth:1
+zplug 'zsh-users/zsh-autosuggestions', defer:2
+zplug 'zsh-users/zsh-completions', defer:2
+zplug 'zsh-users/zsh-history-substring-search', defer:2
+zplug 'zsh-users/zsh-syntax-highlighting', defer:2
+
+# Install packages that have not been installed yet
+if ! zplug check ; then
+  zplug install
+fi
+
+zplug load
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ -f ~/.config/zsh/p10k.zsh ]] && source ~/.config/zsh/p10k.zsh
