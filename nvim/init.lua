@@ -42,5 +42,5 @@ if colorscheme then
 end
 
 require("config.autocmd")
-require('config.basic')
+require('config.options')
 require('config.keymaps')
