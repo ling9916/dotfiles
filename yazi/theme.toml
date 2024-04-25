@@ -27,8 +27,8 @@ find_position = { fg = "magenta", bg = "reset", bold = true, italic = true }
 # Marker
 marker_copied   = { fg = "lightgreen",  bg = "lightgreen" }
 marker_cut      = { fg = "lightred",    bg = "lightred" }
-marker_marked   = { fg = "lightyellow", bg = "lightyellow" }
-marker_selected = { fg = "lightblue",   bg = "lightblue" }
+marker_marked   = { fg = "lightcyan",   bg = "lightcyan" }
+marker_selected = { fg = "lightyellow", bg = "lightyellow" }
 
 # Tab
 tab_active   = { reversed = true }
@@ -38,10 +38,10 @@ tab_width    = 1
 # Count
 count_copied   = { fg = "white", bg = "green" }
 count_cut      = { fg = "white", bg = "red" }
-count_selected = { fg = "white", bg = "blue" }
+count_selected = { fg = "white", bg = "yellow" }
 
 # Border
-border_symbol = " " # "│"
+border_symbol = " "   # "│"
 border_style  = { fg = "gray" }
 
 # Highlighting
@@ -170,27 +170,24 @@ icon_error = ""
 
 rules = [
 	# Images
-	{ mime = "image/*", fg = "cyan" },
+	{ mime = "image/*", fg = "yellow" },
 
 	# Media
-	{ mime = "video/*", fg = "yellow" },
-	{ mime = "audio/*", fg = "yellow" },
+	{ mime = "{audio,video}/*", fg = "magenta" },
 
 	# Archives
-	{ mime = "application/zip",             fg = "magenta" },
-	{ mime = "application/gzip",            fg = "magenta" },
-	{ mime = "application/x-tar",           fg = "magenta" },
-	{ mime = "application/x-bzip",          fg = "magenta" },
-	{ mime = "application/x-bzip2",         fg = "magenta" },
-	{ mime = "application/x-7z-compressed", fg = "magenta" },
-	{ mime = "application/x-rar",           fg = "magenta" },
-	{ mime = "application/x-xz",              fg = "magenta" },
+	{ mime = "application/*zip", fg = "red" },
+	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", fg = "red" },
 
 	# Documents
-	{ mime = "application/doc",   fg = "green" },
-	{ mime = "application/pdf",   fg = "green" },
-	{ mime = "application/rtf",   fg = "green" },
-	{ mime = "application/vnd.*", fg = "green" },
+	{ mime = "application/{pdf,doc,rtf,vnd.*}", fg = "cyan" },
+
+	# Empty files
+	# { mime = "inode/x-empty", fg = "red" },
+
+	# Special files
+	{ name = "*", is = "orphan", bg = "red" },
+	{ name = "*", is = "exec"  , fg = "green" },
 
 	# Fallback
 	# { name = "*", fg = "white" },
@@ -235,11 +232,12 @@ rules = [
 
 	# Text
 	{ name = "*.conf", text = "", fg = "#6d8086" },
+	{ name = "*.cfg" , text = "", fg = "#6d8086" },
 	{ name = "*.ini" , text = "", fg = "#6d8086" },
 	{ name = "*.json", text = "", fg = "#cbcb41" },
 	{ name = "*.kdl" , text = "", fg = "#6d8086" },
-	{ name = "*.md"  , text = "", fg = "#ffffff" },
-	{ name = "*.toml", text = "", fg = "#ffffff" },
+	{ name = "*.md"  , text = "", fg = "white"   },
+	{ name = "*.toml", text = "", fg = "white"   },
 	{ name = "*.txt" , text = "", fg = "#89e051" },
 	{ name = "*.yaml", text = "", fg = "#6d8086" },
 	{ name = "*.yml" , text = "", fg = "#6d8086" },
@@ -278,6 +276,7 @@ rules = [
 	{ name = "*.m4a" , text = "", fg = "#66D8EF" },
 	{ name = "*.mp3" , text = "", fg = "#66D8EF" },
 	{ name = "*.ogg" , text = "", fg = "#66D8EF" },
+	{ name = "*.opus", text = "", fg = "#66D8EF" },
 	{ name = "*.wav" , text = "", fg = "#66D8EF" },
 
 	# Documents
@@ -314,36 +313,46 @@ rules = [
 	{ name = "*.pkg", text = "", fg = "#9F0500" },
 
 	# Dotfiles
-	{ name = ".DS_Store"     , text = "", fg = "#41535b" },
-	{ name = ".bashprofile"  , text = "", fg = "#89e051" },
-	{ name = ".bashrc"       , text = "", fg = "#89e051" },
-	{ name = ".gitattributes", text = "", fg = "#41535b" },
-	{ name = ".gitignore"    , text = "", fg = "#41535b" },
-	{ name = ".gitmodules"   , text = "", fg = "#41535b" },
-	{ name = ".vimrc"        , text = "", fg = "#019833" },
-	{ name = ".zprofile"     , text = "", fg = "#89e051" },
-	{ name = ".zshenv"       , text = "", fg = "#89e051" },
-	{ name = ".zshrc"        , text = "", fg = "#89e051" },
+	{ name = "*/.DS_Store"     , text = "", fg = "#41535b" },
+	{ name = "*/.bash_profile" , text = "", fg = "#89e051" },
+	{ name = "*/.bashrc"       , text = "", fg = "#89e051" },
+	{ name = "*/.gitattributes", text = "", fg = "#41535b" },
+	{ name = "*/.gitignore"    , text = "", fg = "#41535b" },
+	{ name = "*/.gitmodules"   , text = "", fg = "#41535b" },
+	{ name = "*/.vimrc"        , text = "", fg = "#019833" },
+	{ name = "*/.zprofile"     , text = "", fg = "#89e051" },
+	{ name = "*/.zshenv"       , text = "", fg = "#89e051" },
+	{ name = "*/.zshrc"        , text = "", fg = "#89e051" },
 
 	# Named files
-	{ name = "COPYING"      , text = "󰿃", fg = "#cbcb41" },
-	{ name = "Containerfile", text = "󰡨", fg = "#458ee6" },
-	{ name = "Dockerfile"   , text = "󰡨", fg = "#458ee6" },
-	{ name = "LICENSE"      , text = "󰿃", fg = "#d0bf41" },
+	{ name = "*/COPYING"      , text = "󰿃", fg = "#cbcb41" },
+	{ name = "*/Containerfile", text = "󰡨", fg = "#458ee6" },
+	{ name = "*/Dockerfile"   , text = "󰡨", fg = "#458ee6" },
+	{ name = "*/LICENSE"      , text = "󰿃", fg = "#d0bf41" },
 
 	# Directories
-	{ name = ".config/"    , text = "" },
-	{ name = ".git/"       , text = "" },
-	{ name = "Desktop/"    , text = "" },
-	{ name = "Development/", text = "" },
-	{ name = "Documents/"  , text = "" },
-	{ name = "Downloads/"  , text = "" },
-	{ name = "Library/"    , text = "" },
-	{ name = "Movies/"     , text = "" },
-	{ name = "Music/"      , text = "" },
-	{ name = "Pictures/"   , text = "" },
-	{ name = "Public/"     , text = "" },
-	{ name = "Videos/"     , text = "" },
+	{ name = "*/.config/"    , text = "" },
+	{ name = "*/.git/"       , text = "" },
+	{ name = "*/Desktop/"    , text = "" },
+	{ name = "*/Development/", text = "" },
+	{ name = "*/Documents/"  , text = "" },
+	{ name = "*/Downloads/"  , text = "" },
+	{ name = "*/Library/"    , text = "" },
+	{ name = "*/Movies/"     , text = "" },
+	{ name = "*/Music/"      , text = "" },
+	{ name = "*/Pictures/"   , text = "" },
+	{ name = "*/Public/"     , text = "" },
+	{ name = "*/Videos/"     , text = "" },
+
+	# Special files
+	{ name = "*", is = "orphan", text = "" },
+	{ name = "*", is = "link"  , text = "" },
+	{ name = "*", is = "block" , text = "" },
+	{ name = "*", is = "char"  , text = "" },
+	{ name = "*", is = "fifo"  , text = "" },
+	{ name = "*", is = "sock"  , text = "" },
+	{ name = "*", is = "sticky", text = "" },
+	{ name = "*", is = "exec"  , text = "" },
 
 	# Default
 	{ name = "*" , text = "" },
