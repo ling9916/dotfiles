@@ -1,3 +1,8 @@
+# History in cache dircetory
+HISTFILE=$HOME/.cache/zsh/hostory
+HISTSIZE=4096
+SAVEHIST=10000
+
 # 加载环境配置
 if [[ "$(uname)" == "Linux" ]]; then
   [[ -f $HOME/.config/zsh/linux.cfg ]] && source $HOME/.config/zsh/linux.cfg
@@ -8,22 +13,15 @@ fi
 # 加载代理配置
  [[ -f $HOME/.config/zsh/proxy.cfg ]] && source $HOME/.config/zsh/proxy.cfg
 
-#
+# aliases
 alias sudo="sudo -E"
 alias cl="clear"
-if command lsd -V &> /dev/null ;then
-  alias ls="lsd";  alias ll="lsd -l";  alias la="lsd -al"
-fi
-
-if command delta -V &> /dev/null ;then
-  alias diff="delta"
-fi
-
-
 alias nv="nvim"
 alias lg="lazygit"
-alias js="joshuto"
 alias tns="tmux new-session -s"
+if command lsd -V &> /dev/null; then
+  alias ls="lsd";  alias ll="lsd -al";  alias la="lsd -a"
+fi
 
 export ZPLUG_HOME=${ZSH}/custom/zplug
 # Check if zplug is installed
