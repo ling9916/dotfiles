@@ -7,11 +7,10 @@ vim.g.mapleader = " "
 
 local colorscheme = "tokyonight"
 
-
 -- ===================================================================
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local output = vim.fn.system {
+  local isErr = vim.fn.system {
     "git", "clone",
     "--filte=blob:none",
     "https://github.com/folke/lazy.nvim.git",
@@ -19,7 +18,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     lazypath
   }
   if vim.api.nvim_get_vvar "shell_error" ~= 0 then
-    vim.api.nvim_err_writeln("Error cloning lazy.nvim repository...\n\n" .. output)
+    vim.api.nvim_err_writeln("Error cloning lazy.nvim repository...\n\n" .. isErr)
   end
   local oldcmdheight = vim.opt.cmdheight:get()
   vim.opt.cmdheight = 1
@@ -41,6 +40,6 @@ if colorscheme then
   end
 end
 
-require("config.autocmd")
+require("config.autocmds")
 require('config.options')
 require('config.keymaps')
