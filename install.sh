@@ -22,6 +22,10 @@ for name in `ls ${SCRIPT_DIR}`; do
   if [[ ! -d "${SCRIPT_DIR}/${name}" ]]; then
     continue
   fi
+  
+  if [[ -d $DEST_DIR/${name} ]]; then
+    mv $DEST_DIR/${name} $DEST_DIR/${name}.bak 
+  fi
 
   ln -sf ${SCRIPT_DIR}/${name} $DEST_DIR
 done
@@ -32,7 +36,11 @@ if [[ -f $HOME/.config/zsh/zshrc ]]; then
 fi 
 
 
-cat > $SCRIPT_DIR/vim << EOF
+if [[ ! -d /usr/local/bin ]]; then
+  sudo mkdir /usr/local/bin
+fi 
+
+sudo sh -c 'cat > /usr/local/bin/vim << EOF
 #!/bin/bash
 main() {
   if which nvim >/dev/null; then
@@ -42,13 +50,8 @@ main() {
   fi
 }
 main "\$@"
-EOF
-
-if [[ ! -d /usr/local/bin ]]; then
-  sudo mkdir /usr/local/bin
-fi 
-
-chmod 755 $SCRIPT_DIR/vim && sudo mv $SCRIPT_DIR/vim /usr/local/bin/vim
+EOF'
+sudo chmod 755 /usr/local/bin/vim
 
 
 
