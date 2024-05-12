@@ -6,7 +6,6 @@ return {
     dependencies = {
       { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
       { "folke/neodev.nvim",  opts = {} },
-      "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
     ---@class PluginLspOpts
@@ -56,24 +55,28 @@ return {
         formatting_options = nil,
         timeout_ms = nil,
       },
-      servers = { lua_ls = {}},
+      -- LSP Server Settings
+      ---@type function|table
+      servers = function()
+        local mod_dir = vim.fn.stdpath("config") .. "/lua/mason"
+				return {}
+      end
     },
 
+
     config = function(_, opts)
-      local server = opts.servers
-      print(server)
-      local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      local server = opts.servers()
+
+      local ok_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
       local capabilities = vim.tbl_deep_extend(
-        "force",
-        {},
-        vim.lsp.protocol.make_client_capabilities(),
-        has_cmp and cmp_nvim_lsp.default_capabilities() or {},
+        "force", {}, vim.lsp.protocol.make_client_capabilities(),
+        ok_cmp and cmp_nvim_lsp.default_capabilities() or {},
         opts.capabilities or {}
       )
 
-      local lsp_list = require("mason.lsp")
+      local lsp_list = require("servers.lsp")
       require('mason-lspconfig').setup {
-        ensure_installed = vim.tbl_keys(lsp_list),
+        -- ensure_installed = vim.tbl_keys(lsp_list),
         handlers = {
           function(lsp_name)
             local lsp_opts = vim.tbl_deep_extend("force", {
