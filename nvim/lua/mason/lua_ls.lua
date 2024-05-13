@@ -4,15 +4,9 @@ return {
     opts = {
       settings = {
         Lua = {
-          workspace = {
-            checkThirdParty = false,
-          },
-          codeLens = {
-            enable = true,
-          },
-          completion = {
-            callSnippet = "Replace",
-          },
+          workspace = { checkThirdParty = false },
+          codeLens = { enable = true },
+          completion = { callSnippet = "Replace" },
         },
       },
     }

@@ -1,3 +1,7 @@
 return {
-  clangd = "aaa"
+  clangd = {
+		language = {"c", "c++"},
+		opts = {}
+	},
+
 }
