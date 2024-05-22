@@ -38,13 +38,13 @@ return {
       -- Be aware that you also will need to properly configure your LSP server to
       -- provide the inlay hints.
       inlay_hints = {
-        enabled = false,
+        enabled = true,
       },
       -- Enable this to enable the builtin LSP code lenses on Neovim >= 0.10.0
       -- Be aware that you also will need to properly configure your LSP server to
       -- provide the code lenses.
       codelens = {
-        enabled = false,
+        enabled = true,
       },
       -- add any global capabilities here
       capabilities = {},
@@ -55,18 +55,24 @@ return {
         formatting_options = nil,
         timeout_ms = nil,
       },
-      -- LSP Server Settings
-      ---@type function|table
-      servers = function()
-        local mod_dir = vim.fn.stdpath("config") .. "/lua/mason"
-				return {}
+      on_attach = function (_, bufnr)
+          -- Global mappings.
+  -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+      -- Buffer local mappings.
+      -- See `:help vim.lsp.*` for documentation on any of the below functions
+      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, {})
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
       end
     },
 
 
     config = function(_, opts)
-      local server = opts.servers()
-
       local ok_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
       local capabilities = vim.tbl_deep_extend(
         "force", {}, vim.lsp.protocol.make_client_capabilities(),
@@ -81,7 +87,8 @@ return {
           function(lsp_name)
             local lsp_opts = vim.tbl_deep_extend("force", {
               capabilities = vim.deepcopy(capabilities),
-            }, lsp_list[server] or {})
+              on_attach = opts.on_attach
+            }, lsp_list[lsp_name] or {})
 
             if lsp_list[lsp_name] ~= nil and lsp_list[lsp_name].opts ~= nil then
               lsp_opts = vim.tbl_deep_extend("force", lsp_list[lsp_name].opts, lsp_opts)

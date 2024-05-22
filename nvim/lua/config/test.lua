@@ -1,4 +1,4 @@
-print("test")
+-- print("test")
 
 local function ls(path, fn)
 	local handle = vim.uv.fs_scandir(path)
@@ -33,7 +33,7 @@ end
 
 
 local mod_name = "mason/lua_ls"
-print(mod_name)
+-- print(mod_name)
 lsp_load(mod_name)
 
 return {}
