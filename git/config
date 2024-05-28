@@ -10,14 +10,14 @@
 	quotepath = false
 	pager = delta
 [alias]
-	ad = add
-	co = checkout
 	br = branch
 	ci = commit
+	co = checkout
 	st = status
 	unstage = reset HEAD --
 [interactive]
 	diffFilter = delta --color-only
 [delta]
+  navigate = true   # 使用n 和N 在差异部分之间移动
 	line-numbers = true
 	# side-by-side = true

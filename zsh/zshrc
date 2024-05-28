@@ -1,5 +1,6 @@
 # History in cache dircetory
-HISTFILE=$HOME/.cache/zsh/hostory
+[ -d "$HOME/.cache/zsh" ] || mkdir $HOME/.cache/zsh
+HISTFILE=$HOME/.cache/zsh/history
 HISTSIZE=4096
 SAVEHIST=10000
 
