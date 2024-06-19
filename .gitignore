@@ -1,7 +1,6 @@
 # Project gitignore
+zsh/plugins/
 nvim/lazy-lock.json
-nvim/lua/.luarc.json
-
 
 # Global gitignore
 # ----------------

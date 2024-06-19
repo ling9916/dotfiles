@@ -24,7 +24,7 @@ if command lsd -V &> /dev/null; then
   alias ls="lsd";  alias ll="lsd -al";  alias la="lsd -a"
 fi
 
-export ZPLUG_HOME=${ZSH}/custom/zplug
+export ZPLUG_HOME=$HOME/.config/zsh/plugins/zplug
 # Check if zplug is installed
 if [[ ! -d "${ZPLUG_HOME}" ]]; then
   git clone https://github.com/zplug/zplug $ZPLUG_HOME
@@ -40,13 +40,12 @@ fi
 source ${ZPLUG_HOME}/init.zsh
 
 # List of plugin packages that need to be installed
-zplug 'plugins/git', from:oh-my-zsh, if:'which git'
-zplug 'plugins/vi-mode', from:oh-my-zsh
 zplug 'romkatv/powerlevel10k', as:theme, depth:1
 zplug 'zsh-users/zsh-autosuggestions', defer:2
 zplug 'zsh-users/zsh-completions', defer:2
 zplug 'zsh-users/zsh-history-substring-search', defer:2
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
+zplug 'jeffreytse/zsh-vi-mode', depth:1
 
 # Install packages that have not been installed yet
 if ! zplug check ; then
