@@ -1,0 +1,9 @@
+
+# 根据 schema 提供自动补全
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+
+[directory]
+truncation_length = 8
+fish_style_pwd_dir_length = 1
